@@ -39,6 +39,7 @@
                         <viewControllerLayoutGuide type="bottom" id="msQ-oj-FH1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ulm-nm-8Tf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -121,6 +122,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D83-fL-Pzd" id="aMv-sy-qgL">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -178,6 +180,7 @@
                         <viewControllerLayoutGuide type="bottom" id="q19-L4-VnB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GgY-Yh-tsl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
