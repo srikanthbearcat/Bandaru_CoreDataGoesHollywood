@@ -7,10 +7,27 @@
 //
 
 import UIKit
-
+import CoreData
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    let managedObjectContext =  (UIApplication.sharedApplication().delegate as!
+        AppDelegate).managedObjectContext
+    //Stores the fetched movie data
+    var movies = [NSManagedObject]()
+    @IBOutlet weak var releaseDateTF: UITextField!
+    @IBOutlet weak var directorTF: UITextField!
 
+    @IBAction func segmentAction(sender: AnyObject) {
+        if  sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Release Date" {
+           fetchMovieByReleaseDate()
+        }
+        else if sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Director" {
+           fetchMovieByDirector()
+            
+    }
+        else {
+            fetchAllMovies()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,18 +38,55 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //fetch movies
+    func fetchAllMovies(){
+        
+    }
+    
+    //fetch movies by  director
+    func fetchMovieByDirector(){
+        
+    }
+    
+    //fetch movies by release date
+    func fetchMovieByReleaseDate(){
+        
+    }
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return movies.count
     }
+        
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:UITableViewCell!
         cell = tableView.dequeueReusableCellWithIdentifier("movie_cell", forIndexPath: indexPath)
-        cell.textLabel?.text = "hello"
+        do {
+            let fetchRequest = NSFetchRequest(entityName:"Movie")
+            let movies =
+                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
+            for movie in movies {
+               cell.textLabel?.text = movie.title
+                
+            }
+        } catch {
+            print("Error when trying to fetch: \(error)")
+        }
+
         return cell
+    }
+    
+    @IBAction func doneAddingMovies(segue:UIStoryboardSegue){
+        
+    }
+    
+    @IBAction func cancelAddingMovies(segue:UIStoryboardSegue){
+        
     }
     /*
     // MARK: - Navigation

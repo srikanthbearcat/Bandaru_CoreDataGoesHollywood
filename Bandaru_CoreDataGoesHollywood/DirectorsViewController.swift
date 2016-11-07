@@ -20,7 +20,13 @@ class DirectorsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func doneAddingDirector(segue:UIStoryboardSegue){
+        
+    }
     
+    @IBAction func cancelAddingDirector(segue:UIStoryboardSegue){
+        
+    }
     
 
     /*
