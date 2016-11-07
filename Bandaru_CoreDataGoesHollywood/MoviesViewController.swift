@@ -13,6 +13,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         AppDelegate).managedObjectContext
     //Stores the fetched movie data
     var movies = [NSManagedObject]()
+
     @IBOutlet weak var releaseDateTF: UITextField!
     @IBOutlet weak var directorTF: UITextField!
 
@@ -44,14 +45,23 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        do {
+            let fetchRequest = NSFetchRequest(entityName:"Movie")
+            movies =
+                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
+           
+            print(movies)
+        }catch {
+            print("Error when trying to fetch: \(error)")
+        }
+
         dispatch_async(dispatch_get_main_queue(), { self.moviesTableView.reloadData() })
         debugPrint(movies.count)
     }
     
     //fetch movies
     func fetchAllMovies(){
-        
-    self.moviesTableView.reloadData()
+            self.moviesTableView.reloadData()
 
     }
 
@@ -78,16 +88,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell:UITableViewCell!
         cell = tableView.dequeueReusableCellWithIdentifier("movie_cell", forIndexPath: indexPath)
         
-        do {
-            let fetchRequest = NSFetchRequest(entityName:"Movie")
-            let movies =
-                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
-            for movie in movies {
-                cell.textLabel?.text = movie.title!
-        }
-        }catch {
-            print("Error when trying to fetch: \(error)")
-        }
+         cell.textLabel?.text = String((movies[indexPath.row] as! Movie).title!)
         
      
         
