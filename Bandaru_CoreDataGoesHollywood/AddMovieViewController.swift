@@ -28,45 +28,65 @@ class AddMovieViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        
         if (sender as! UIBarButtonItem).title == "Cancel" {
+            
             
         }
         else {
-        let movie = NSEntityDescription.insertNewObjectForEntityForName("Movie", inManagedObjectContext: managedObjectContext) as! Movie
-            movie.title = titleTF.text
+            
+            let movie = NSEntityDescription.insertNewObjectForEntityForName("Movie", inManagedObjectContext: managedObjectContext) as! Movie
+            movie.title = titleTF.text!
             movie.cost = Int(costTF.text!)
             movie.releaseYear = Int(releaseDateTF.text!)
             var name:[String] = (directorNameTF.text?.componentsSeparatedByString(" "))!
+            
+            
             do {
+                
                 let fetchRequest = NSFetchRequest(entityName:"Director")
                 let directors =
                     try managedObjectContext.executeFetchRequest(fetchRequest) as! [Director]
+                
+                if directors != [] {
+                    
                 for director in directors {
+                    
                     if director.lastName == name[0] && director.firstName == name[1] {
-                   movie.director = director
+                        movie.director = director
                     }
+                    }
+                }
                     else{
+                    
                         let director = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
                         
                         director.lastName = name[0]
                         director.firstName = name[1]
+                    movie.director = director
 
                     }
-                    
-                }
+                
+                
             } catch {
+                
                 print("Error when trying to fetch: \(error)")
             }
+            
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("Error when trying to save movie: \(error)")
+            }
+
             
             
         }

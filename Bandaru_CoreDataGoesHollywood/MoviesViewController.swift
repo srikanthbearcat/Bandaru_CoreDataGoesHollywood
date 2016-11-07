@@ -16,6 +16,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var releaseDateTF: UITextField!
     @IBOutlet weak var directorTF: UITextField!
 
+    @IBOutlet weak var moviesTableView: UITableView!
     @IBAction func segmentAction(sender: AnyObject) {
         if  sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Release Date" {
            fetchMovieByReleaseDate()
@@ -39,11 +40,21 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+  
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        dispatch_async(dispatch_get_main_queue(), { self.moviesTableView.reloadData() })
+        debugPrint(movies.count)
+    }
+    
     //fetch movies
     func fetchAllMovies(){
         
+    self.moviesTableView.reloadData()
+
     }
-    
+
     //fetch movies by  director
     func fetchMovieByDirector(){
         
@@ -66,23 +77,27 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:UITableViewCell!
         cell = tableView.dequeueReusableCellWithIdentifier("movie_cell", forIndexPath: indexPath)
+        
         do {
             let fetchRequest = NSFetchRequest(entityName:"Movie")
             let movies =
                 try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
             for movie in movies {
-               cell.textLabel?.text = movie.title
-                
-            }
-        } catch {
+                cell.textLabel?.text = movie.title!
+        }
+        }catch {
             print("Error when trying to fetch: \(error)")
         }
-
+        
+     
+        
         return cell
     }
     
     @IBAction func doneAddingMovies(segue:UIStoryboardSegue){
         
+    
+
     }
     
     @IBAction func cancelAddingMovies(segue:UIStoryboardSegue){
