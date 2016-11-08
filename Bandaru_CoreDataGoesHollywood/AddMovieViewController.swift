@@ -47,7 +47,7 @@ class AddMovieViewController: UIViewController {
             movie.title = titleTF.text!
             movie.cost = Int(costTF.text!)
             movie.releaseYear = Int(releaseDateTF.text!)
-            var name:[String] = (directorNameTF.text?.componentsSeparatedByString(" "))!
+            var name:[String] = (directorNameTF.text?.componentsSeparatedByString(", "))!
             
             
             do {

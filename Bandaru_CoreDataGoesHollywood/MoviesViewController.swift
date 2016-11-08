@@ -45,29 +45,48 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        do {
-            let fetchRequest = NSFetchRequest(entityName:"Movie")
-            movies =
-                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
-           
-            print(movies)
-        }catch {
-            print("Error when trying to fetch: \(error)")
-        }
-
-        dispatch_async(dispatch_get_main_queue(), { self.moviesTableView.reloadData() })
-        debugPrint(movies.count)
+        
+//        dispatch_async(dispatch_get_main_queue(), { self.moviesTableView.reloadData() })
+//        debugPrint(movies.count)
     }
     
     //fetch movies
     func fetchAllMovies(){
-            self.moviesTableView.reloadData()
+        do {
+            let fetchRequest = NSFetchRequest(entityName:"Movie")
+            movies =
+                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
+            
+//            print(movies)
+        }catch {
+            print("Error when trying to fetch all movies: \(error)")
+        }
 
+            self.moviesTableView.reloadData()
+ 
     }
 
     //fetch movies by  director
     func fetchMovieByDirector(){
+        var name:[String] = (directorTF.text?.componentsSeparatedByString(", "))!
+        do {
+            
+            let fetchRequest = NSFetchRequest(entityName:"Movie")
+            let allMovies =
+                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
+            movies = []
+            for movie in allMovies {
+                if (movie.director as! Director).firstName == name[1] && (movie.director as! Director).lastName == name[0] {
+                    movies.append(movie)
+                }
+            }
         
+            }
+            catch {
+                
+                print("Error when trying to fetch: \(error)")
+            }
+        self.moviesTableView.reloadData()
     }
     
     //fetch movies by release date
@@ -89,6 +108,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell = tableView.dequeueReusableCellWithIdentifier("movie_cell", forIndexPath: indexPath)
         
          cell.textLabel?.text = String((movies[indexPath.row] as! Movie).title!)
+        cell.detailTextLabel?.text = "Release Date: " + String((movies[indexPath.row] as! Movie).releaseYear!) + " -- " + "Cost: $" + String((movies[indexPath.row] as! Movie).cost!)
         
      
         
