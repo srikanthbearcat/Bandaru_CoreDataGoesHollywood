@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jcg-JT-uV3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jcg-JT-uV3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -180,14 +180,6 @@
                                     <rect key="frame" x="20" y="167" width="121" height="21"/>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v5U-sd-az1">
-                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="149" y="121" width="231" height="30"/>
-                                </variation>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N0O-Iu-9px">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -208,6 +200,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wfu-qB-6Id">
+                                                    <rect key="frame" x="15" y="1" width="34" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -217,6 +210,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NQm-Xa-SYa">
+                                                    <rect key="frame" x="15" y="22" width="59" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -237,6 +231,14 @@
                                     <outlet property="delegate" destination="Fcz-wc-Klj" id="ZUf-J8-Ew6"/>
                                 </connections>
                             </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="last name, first name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v5U-sd-az1">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="149" y="121" width="231" height="30"/>
+                                </variation>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
@@ -244,9 +246,9 @@
                                 <exclude reference="Dpd-jB-RJm"/>
                                 <exclude reference="sAi-A2-CW2"/>
                                 <exclude reference="Swn-mA-bT7"/>
-                                <exclude reference="v5U-sd-az1"/>
                                 <exclude reference="N0O-Iu-9px"/>
                                 <exclude reference="Sp2-sR-7TC"/>
+                                <exclude reference="v5U-sd-az1"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -254,9 +256,9 @@
                                 <include reference="Dpd-jB-RJm"/>
                                 <include reference="sAi-A2-CW2"/>
                                 <include reference="Swn-mA-bT7"/>
-                                <include reference="v5U-sd-az1"/>
                                 <include reference="N0O-Iu-9px"/>
                                 <include reference="Sp2-sR-7TC"/>
+                                <include reference="v5U-sd-az1"/>
                             </mask>
                         </variation>
                     </view>
@@ -266,7 +268,11 @@
                                 <segue destination="n1H-zB-vMw" kind="show" id="eXC-bM-89J"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Initialize DB" id="lzN-0X-ee8"/>
+                        <barButtonItem key="rightBarButtonItem" title="Initialize DB" id="lzN-0X-ee8">
+                            <connections>
+                                <action selector="initializeDB:" destination="Fcz-wc-Klj" id="1Co-Aq-eqQ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="directorTF" destination="v5U-sd-az1" id="DnH-xp-5hG"/>
@@ -350,7 +356,7 @@
                                     <rect key="frame" x="75" y="289" width="67" height="21"/>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sreekanth Bandaru" borderStyle="roundedRect" placeholder="last name, first name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kba-we-OGx">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="bandaru, sreekanth" borderStyle="roundedRect" placeholder="last name, first name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kba-we-OGx">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>

@@ -25,15 +25,62 @@ class HollywoodDreamMaker {
     
     func initializeDB(){
         
-        
         let managedObjectContext =  (UIApplication.sharedApplication().delegate as!
             AppDelegate).managedObjectContext
         
+        
+        // Create Fetch Request
+        let fetchRequest = NSFetchRequest(entityName: "Director")
+        
+        // Create Batch Delete Request
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try managedObjectContext.executeRequest(batchDeleteRequest)
+            
+        } catch {
+            // Error Handling
+            print("Error when trying to deleting previous director records: \(error)")
+        }
+        
+        // Create Fetch Request
+        let fetchRequest1 = NSFetchRequest(entityName: "Movie")
+        
+        // Create Batch Delete Request
+        let batchDeleteRequest1 = NSBatchDeleteRequest(fetchRequest: fetchRequest1)
+        
+        do {
+            try managedObjectContext.executeRequest(batchDeleteRequest1)
+            
+        } catch {
+            // Error Handling
+            print("Error when trying to deleting previous movie records: \(error)")
+        }
+        
+        //Initializing directors
+        for i in directors {
+            
+            let director0 = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
+            
+            director0.lastName = i[0] as? String
+            director0.firstName = i[1] as! String
+            director0.yearOfBirth = i[2] as! NSNumber
+            
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("Error when trying to save director: \(error)")
+            }
+            
+        }
+
+        
+        //Initializing movies
         for movie in movies{
-            let directors:[Director]!
+            var allDirectors:[Director] = []
             do {
                 let fetchRequest = NSFetchRequest(entityName:"Director")
-                directors = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Director]
+                allDirectors = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Director]
                 
             } catch {
                 print("Error when trying to fetch director: \(error)")
@@ -41,15 +88,29 @@ class HollywoodDreamMaker {
             
             let movie0 = NSEntityDescription.insertNewObjectForEntityForName("Movie", inManagedObjectContext: managedObjectContext) as! Movie
             
-            movie0.title = movie[0] as! String
-            movie0.cost = movie[1] as! NSNumber
-            movie0.releaseYear = movie[2] as! NSNumber
+            movie0.title = movie[0] as? String
+            movie0.cost = movie[1] as? NSNumber
+            movie0.releaseYear = movie[2] as? NSNumber
             if movie[3] as! String == "Spielberg" {
-//                for i in directors {
-//                    if i.lastName == "Spielberg" {
-//                        movie0.director = i
-//                    }
-//                }
+                for i in allDirectors {
+                    if i.lastName == "Spielberg" {
+                        movie0.director = i
+                    }
+                }
+            }
+            if movie[3] as! String == "Nolan" {
+                for i in allDirectors {
+                    if i.lastName == "Nolan" {
+                        movie0.director = i
+                    }
+                }
+            }
+            if movie[3] as! String == "Abrams" {
+                for i in allDirectors {
+                    if i.lastName == "Abrams" {
+                        movie0.director = i
+                    }
+                }
             }
             
             do {
@@ -63,21 +124,6 @@ class HollywoodDreamMaker {
 
         
         
-        for i in directors {
-            
-            let director0 = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
-            
-            director0.lastName = i[0] as! String
-            director0.firstName = i[1] as! String
-            director0.yearOfBirth = i[2] as! NSNumber
-            
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print("Error when trying to save director: \(error)")
-            }
-            
-        }
         
         
         

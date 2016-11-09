@@ -56,27 +56,28 @@ class AddMovieViewController: UIViewController {
                 let directors =
                     try managedObjectContext.executeFetchRequest(fetchRequest) as! [Director]
                 
-                if directors != [] {
+        
                     
                 for director in directors {
                     
                     if director.lastName == name[0] && director.firstName == name[1] {
                         movie.director = director
                     }
-                    }
-                }
-                    else{
                     
-                        let director = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
+                }
+                if movie.director == nil{
+                    
+                        let newDirector = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
                         
-                        director.lastName = name[0]
-                        director.firstName = name[1]
-                    movie.director = director
+                        newDirector.lastName = name[0]
+                        newDirector.firstName = name[1]
+                    movie.director = newDirector
 
-                    }
+                }
+                    
                 
-                
-            } catch {
+            
+            }catch {
                 
                 print("Error when trying to fetch: \(error)")
             }

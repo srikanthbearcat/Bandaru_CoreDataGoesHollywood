@@ -23,8 +23,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
            fetchMovieByReleaseDate()
         }
         else if sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Director" {
-           fetchMovieByDirector()
-            
+            let name:[String] = (directorTF.text?.componentsSeparatedByString(", "))!
+            if name[0] != "" && name[1] != "" {
+           fetchMovieByDirector(name)
+            }
+            else{
+                displayMessage("Enter last name and first name sperated by comma")
+            }
     }
         else {
             fetchAllMovies()
@@ -45,11 +50,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-//        dispatch_async(dispatch_get_main_queue(), { self.moviesTableView.reloadData() })
-//        debugPrint(movies.count)
+
     }
     
+    @IBAction func initializeDB(sender: AnyObject) {
+        var hollywoodDreamMaker = HollywoodDreamMaker()
+        hollywoodDreamMaker.initializeDB()
+    }
     //fetch movies
     func fetchAllMovies(){
         do {
@@ -57,7 +64,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             movies =
                 try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
             
-//            print(movies)
+
         }catch {
             print("Error when trying to fetch all movies: \(error)")
         }
@@ -67,17 +74,19 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     //fetch movies by  director
-    func fetchMovieByDirector(){
-        var name:[String] = (directorTF.text?.componentsSeparatedByString(", "))!
+    func fetchMovieByDirector(name:[String]){
         do {
             
             let fetchRequest = NSFetchRequest(entityName:"Movie")
             let allMovies =
                 try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
             movies = []
+            
             for movie in allMovies {
-                if (movie.director as! Director).firstName == name[1] && (movie.director as! Director).lastName == name[0] {
+                if movie.director != [] {
+                if (movie.director as! Director).firstName! == name[1] && (movie.director as! Director).lastName! == name[0] {
                     movies.append(movie)
+                }
                 }
             }
         
@@ -91,7 +100,26 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //fetch movies by release date
     func fetchMovieByReleaseDate(){
-        
+        var date:Int = Int((releaseDateTF.text)!)!
+        do {
+            
+            let fetchRequest = NSFetchRequest(entityName:"Movie")
+            let allMovies =
+                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
+            movies = []
+            
+            for movie in allMovies {
+                if movie.releaseYear == date {
+                    movies.append(movie)
+                }
+            }
+            
+        }
+        catch {
+            
+            print("Error when trying to fetch: \(error)")
+        }
+        self.moviesTableView.reloadData()
     }
     
     
@@ -133,5 +161,15 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Pass the selected object to the new view controller.
     }
     */
-
+    // Pass in a String and it will be displayed in an alert view
+    func displayMessage(message:String) {
+        let alert = UIAlertController(title: "", message: message,
+                                      
+                                      preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title:"OK", style: .Default, handler: nil)
+        alert.addAction(defaultAction)
+        self.presentViewController(alert,animated:true, completion:nil)
+    }
+    
+    
 }
