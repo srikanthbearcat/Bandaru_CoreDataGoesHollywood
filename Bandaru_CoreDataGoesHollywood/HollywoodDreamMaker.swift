@@ -115,18 +115,15 @@ class HollywoodDreamMaker {
             
             do {
                 try managedObjectContext.save()
+                
             } catch {
                 print("Error when trying to save movie: \(error)")
             }
             
             
         }
-
-        
-        
-        
-        
-        
+  
         
     }
+    
 }

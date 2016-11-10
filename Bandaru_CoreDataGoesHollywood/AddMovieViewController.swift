@@ -84,6 +84,7 @@ class AddMovieViewController: UIViewController {
             
             do {
                 try managedObjectContext.save()
+                
             } catch {
                 print("Error when trying to save movie: \(error)")
             }
@@ -92,6 +93,6 @@ class AddMovieViewController: UIViewController {
             
         }
     }
-    
+   
 
 }
