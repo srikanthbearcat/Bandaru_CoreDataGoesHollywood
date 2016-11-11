@@ -21,13 +21,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func segmentAction(sender: AnyObject) {
         if  sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Release Date" {
             if let date:Int = Int((releaseDateTF.text)!){
-                if date > 0 && date <= 2016 {
+                if date > 0  {
                 fetchMovieByReleaseDate(date)
                 }
                 else{
                     movies = []
                     self.moviesTableView.reloadData()
-                    displayMessage("Enter a valid date between 1 to 2016")
+                    displayMessage("Enter a valid date greater than 0")
                 }
             }
             else{
@@ -98,20 +98,22 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         do {
             
             let fetchRequest = NSFetchRequest(entityName:"Movie")
-            let allMovies =
+            fetchRequest.predicate = NSPredicate(format: "lastName == %@", name[0])
+            fetchRequest.predicate = NSPredicate(format: "firstName == %@", name[1])
+            let movies =
                 try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
             
-                movies = []
                 
-                for movie in allMovies {
-                    if movie.director != [] {
-                        
-                        if (movie.director as! Director).firstName!.lowercaseString == name[1].lowercaseString && (movie.director as! Director).lastName!.lowercaseString == name[0].lowercaseString {
-                            movies.append(movie)
-                        }
-                        
-                    }
-                }
+                
+//                for movie in allMovies {
+//                    if movie.director != [] {
+//                        
+//                        if (movie.director as! Director).firstName!.lowercaseString == name[1].lowercaseString && (movie.director as! Director).lastName!.lowercaseString == name[0].lowercaseString {
+//                            movies.append(movie)
+//                        }
+//                        
+//                    }
+//                }
                 if movies != [] {
                     self.moviesTableView.reloadData()
                 }
