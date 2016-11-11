@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-class AddDirectorMovieController: UIViewController {
+class AddDirectorViewController: UIViewController {
     let managedObjectContext =  (UIApplication.sharedApplication().delegate as!
         AppDelegate).managedObjectContext
 

@@ -15,7 +15,7 @@
 		7EC9C8C71DCEE7310049D11F /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC9C8C61DCEE7310049D11F /* MoviesViewController.swift */; };
 		7EC9C8C91DCEE7490049D11F /* AddMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC9C8C81DCEE7490049D11F /* AddMovieViewController.swift */; };
 		7EC9C8CB1DCEE7650049D11F /* DirectorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC9C8CA1DCEE7650049D11F /* DirectorsViewController.swift */; };
-		7EC9C8CD1DCEE77E0049D11F /* AddDirectorMovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC9C8CC1DCEE77E0049D11F /* AddDirectorMovieController.swift */; };
+		7EC9C8CD1DCEE77E0049D11F /* AddDirectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC9C8CC1DCEE77E0049D11F /* AddDirectorViewController.swift */; };
 		7EC9C8F51DCEEFBF0049D11F /* Movie.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EC9C8F41DCEEFBF0049D11F /* Movie.png */; };
 		7EC9C8F71DCEEFC70049D11F /* Director.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EC9C8F61DCEEFC70049D11F /* Director.png */; };
 		7EC9C8F91DCF16D60049D11F /* HollywoodDreamMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC9C8F81DCF16D60049D11F /* HollywoodDreamMaker.swift */; };
@@ -36,7 +36,7 @@
 		7EC9C8C61DCEE7310049D11F /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
 		7EC9C8C81DCEE7490049D11F /* AddMovieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMovieViewController.swift; sourceTree = "<group>"; };
 		7EC9C8CA1DCEE7650049D11F /* DirectorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectorsViewController.swift; sourceTree = "<group>"; };
-		7EC9C8CC1DCEE77E0049D11F /* AddDirectorMovieController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDirectorMovieController.swift; sourceTree = "<group>"; };
+		7EC9C8CC1DCEE77E0049D11F /* AddDirectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDirectorViewController.swift; sourceTree = "<group>"; };
 		7EC9C8F41DCEEFBF0049D11F /* Movie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Movie.png; sourceTree = "<group>"; };
 		7EC9C8F61DCEEFC70049D11F /* Director.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Director.png; sourceTree = "<group>"; };
 		7EC9C8F81DCF16D60049D11F /* HollywoodDreamMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HollywoodDreamMaker.swift; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 				7EC9C8C61DCEE7310049D11F /* MoviesViewController.swift */,
 				7EC9C8C81DCEE7490049D11F /* AddMovieViewController.swift */,
 				7EC9C8CA1DCEE7650049D11F /* DirectorsViewController.swift */,
-				7EC9C8CC1DCEE77E0049D11F /* AddDirectorMovieController.swift */,
+				7EC9C8CC1DCEE77E0049D11F /* AddDirectorViewController.swift */,
 				7EC9C8BB1DCEE69E0049D11F /* Assets.xcassets */,
 				7EC9C8BD1DCEE69E0049D11F /* LaunchScreen.storyboard */,
 				7EC9C8C01DCEE69E0049D11F /* Info.plist */,
@@ -182,7 +182,7 @@
 				7EC9C9001DCF171E0049D11F /* Director+CoreDataProperties.swift in Sources */,
 				7EC9C8B21DCEE69E0049D11F /* AppDelegate.swift in Sources */,
 				7EC9C8FF1DCF171E0049D11F /* Movie.swift in Sources */,
-				7EC9C8CD1DCEE77E0049D11F /* AddDirectorMovieController.swift in Sources */,
+				7EC9C8CD1DCEE77E0049D11F /* AddDirectorViewController.swift in Sources */,
 				7EC9C8C71DCEE7310049D11F /* MoviesViewController.swift in Sources */,
 				7EC9C8FE1DCF171E0049D11F /* Movie+CoreDataProperties.swift in Sources */,
 				7EC9C8C91DCEE7490049D11F /* AddMovieViewController.swift in Sources */,

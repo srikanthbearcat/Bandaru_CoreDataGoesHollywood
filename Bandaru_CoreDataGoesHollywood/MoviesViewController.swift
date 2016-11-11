@@ -21,21 +21,32 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func segmentAction(sender: AnyObject) {
         if  sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Release Date" {
             if let date:Int = Int((releaseDateTF.text)!){
-           fetchMovieByReleaseDate(date)
+                if date > 0 && date <= 2016 {
+                fetchMovieByReleaseDate(date)
+                }
+                else{
+                    movies = []
+                    self.moviesTableView.reloadData()
+                    displayMessage("Enter a valid date between 1 to 2016")
+                }
             }
             else{
+                movies = []
+                self.moviesTableView.reloadData()
                 displayMessage("Enter a vaild release date(only year)")
             }
         }
         else if sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Director" {
             let name:[String] = (directorTF.text?.componentsSeparatedByString(", "))!
-            if name[0] != "" && name[1] != "" {
-           fetchMovieByDirector(name)
+            if name.count == 2 {
+                fetchMovieByDirector(name)
             }
             else{
-                displayMessage("Enter last name and first name sperated by comma")
+                movies = []
+                self.moviesTableView.reloadData()
+                displayMessage("Enter first name and last name seperated by comma")
             }
-    }
+        }
         else {
             fetchAllMovies()
         }
@@ -50,13 +61,15 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        fetchAllMovies()
+    }
   
     
     
     
     @IBAction func initializeDB(sender: AnyObject) {
-        var hollywoodDreamMaker = HollywoodDreamMaker()
+        let hollywoodDreamMaker = HollywoodDreamMaker()
         hollywoodDreamMaker.initializeDB()
         displayMessage("Database has been initialized")
         
@@ -65,6 +78,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func fetchAllMovies(){
         do {
             let fetchRequest = NSFetchRequest(entityName:"Movie")
+            
             movies =
                 try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
             
@@ -76,37 +90,42 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.moviesTableView.reloadData()
  
     }
-
+    
     //fetch movies by  director
     func fetchMovieByDirector(name:[String]){
+       
+            
         do {
             
             let fetchRequest = NSFetchRequest(entityName:"Movie")
             let allMovies =
                 try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
             
-            movies = []
-            
-            for movie in allMovies {
-                if movie.director != [] {
-                if (movie.director as! Director).firstName!.lowercaseString == name[1].lowercaseString && (movie.director as! Director).lastName!.lowercaseString == name[0].lowercaseString {
-                    movies.append(movie)
+                movies = []
+                
+                for movie in allMovies {
+                    if movie.director != [] {
+                        
+                        if (movie.director as! Director).firstName!.lowercaseString == name[1].lowercaseString && (movie.director as! Director).lastName!.lowercaseString == name[0].lowercaseString {
+                            movies.append(movie)
+                        }
+                        
+                    }
                 }
+                if movies != [] {
+                    self.moviesTableView.reloadData()
                 }
+                else{
+                    displayMessage("No records found")
+                    self.moviesTableView.reloadData()
+                }
+           
             }
-            if movies != [] {
-                self.moviesTableView.reloadData()
-            }
-            else{
-                displayMessage("No records")
-                self.moviesTableView.reloadData()
-            }
-        }
             catch {
                 
                 print("Error when trying to fetch: \(error)")
             }
-        
+       
     }
     
     //fetch movies by release date
@@ -115,15 +134,10 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         do {
             
             let fetchRequest = NSFetchRequest(entityName:"Movie")
-            let allMovies =
+            fetchRequest.predicate = NSPredicate(format:"releaseYear == %D", date)
+            movies =
                 try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
-            movies = []
-            
-            for movie in allMovies {
-                if movie.releaseYear == date {
-                    movies.append(movie)
-                }
-            }
+
             
         }
         catch {
