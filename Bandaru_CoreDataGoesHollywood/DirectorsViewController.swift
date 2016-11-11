@@ -7,9 +7,15 @@
 //
 
 import UIKit
-
-class DirectorsViewController: UIViewController {
-
+import CoreData
+class DirectorsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    let managedObjectContext =  (UIApplication.sharedApplication().delegate as!
+        AppDelegate).managedObjectContext
+    
+    @IBOutlet weak var directorsTV: UITableView!
+ 
+    //Stores the fetched director data
+    var directors = [NSManagedObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +26,19 @@ class DirectorsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        do{
+            let fetchRequest = NSFetchRequest(entityName: "Director")
+            directors = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Director]
+            
+            
+        }catch{
+            print("Error occured when fetching directors: \(error)")
+        }
+        self.directorsTV.reloadData()
+    }
     @IBAction func doneAddingDirector(segue:UIStoryboardSegue){
         
     }
@@ -28,6 +47,32 @@ class DirectorsViewController: UIViewController {
         
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+        return directors.count
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       
+        return (directors[section] as! Director).movies!.count
+        
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell:UITableViewCell!
+        cell = tableView.dequeueReusableCellWithIdentifier("director_cell", forIndexPath: indexPath)
+        let director = (directors[indexPath.section] as! Director)
+       let movies = director.movies?.allObjects
+        let movie:Movie = movies![indexPath.row] as! Movie
+        cell.textLabel?.text  = String(movie.title!)
+      
+
+        
+        return cell
+    }
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return (directors[section] as! Director).lastName! + " " + (directors[section] as! Director).firstName!
+    }
 
     /*
     // MARK: - Navigation

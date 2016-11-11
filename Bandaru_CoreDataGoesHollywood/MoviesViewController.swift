@@ -53,10 +53,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
   
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-
-    }
+    
     
     @IBAction func initializeDB(sender: AnyObject) {
         var hollywoodDreamMaker = HollywoodDreamMaker()
