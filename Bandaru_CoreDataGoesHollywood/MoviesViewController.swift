@@ -62,7 +62,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(animated: Bool) {
-        fetchAllMovies()
+       
     }
   
     
@@ -93,27 +93,18 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //fetch movies by  director
     func fetchMovieByDirector(name:[String]){
-       
-            
         do {
+            let fetchRequestMovie = NSFetchRequest(entityName:"Movie")
+            let fetchRequestDirector = NSFetchRequest(entityName:"Director")
+            fetchRequestDirector.predicate = NSPredicate(format: "lastName == %@", name[0])
+            fetchRequestDirector.predicate = NSPredicate(format: "firstName == %@", name[1])
+            let directors =
+                try managedObjectContext.executeFetchRequest(fetchRequestDirector) as! [Director]
             
-            let fetchRequest = NSFetchRequest(entityName:"Movie")
-            fetchRequest.predicate = NSPredicate(format: "lastName == %@", name[0])
-            fetchRequest.predicate = NSPredicate(format: "firstName == %@", name[1])
-            let movies =
-                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Movie]
-            
-                
-                
-//                for movie in allMovies {
-//                    if movie.director != [] {
-//                        
-//                        if (movie.director as! Director).firstName!.lowercaseString == name[1].lowercaseString && (movie.director as! Director).lastName!.lowercaseString == name[0].lowercaseString {
-//                            movies.append(movie)
-//                        }
-//                        
-//                    }
-//                }
+            if directors.count > 0{
+                fetchRequestMovie.predicate = NSPredicate(format: "director == %@", directors[0])
+                movies = try managedObjectContext.executeFetchRequest(fetchRequestMovie) as! [Movie]
+            }
                 if movies != [] {
                     self.moviesTableView.reloadData()
                 }
@@ -171,7 +162,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func doneAddingMovies(segue:UIStoryboardSegue){
-        
+         fetchAllMovies()
     self.moviesTableView.reloadData()
     
 

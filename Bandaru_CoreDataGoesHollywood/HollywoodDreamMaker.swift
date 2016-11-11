@@ -63,8 +63,8 @@ class HollywoodDreamMaker {
             let director0 = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
             
             director0.lastName = i[0] as? String
-            director0.firstName = i[1] as! String
-            director0.yearOfBirth = i[2] as! NSNumber
+            director0.firstName = i[1] as? String
+            director0.yearOfBirth = i[2] as? NSNumber
             
             do {
                 try managedObjectContext.save()
