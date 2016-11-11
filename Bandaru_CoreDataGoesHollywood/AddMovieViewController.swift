@@ -19,10 +19,10 @@ class AddMovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -39,60 +39,82 @@ class AddMovieViewController: UIViewController {
         
         if (sender as! UIBarButtonItem).title == "Cancel" {
             
-            
         }
         else {
-            
-            let movie = NSEntityDescription.insertNewObjectForEntityForName("Movie", inManagedObjectContext: managedObjectContext) as! Movie
-            movie.title = titleTF.text!
-            movie.cost = Int(costTF.text!)
-            movie.releaseYear = Int(releaseDateTF.text!)
-            var name:[String] = (directorNameTF.text?.componentsSeparatedByString(", "))!
-            
-            
-            do {
-                
-                let fetchRequest = NSFetchRequest(entityName:"Director")
-                let directors =
-                    try managedObjectContext.executeFetchRequest(fetchRequest) as! [Director]
-                
-        
-                    
-                for director in directors {
-                    
-                    if director.lastName == name[0] && director.firstName == name[1] {
-                        movie.director = director
-                    }
-                    
-                }
-                if movie.director == nil{
-                    
-                        let newDirector = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
+            if titleTF.text! != ""  {
+                if Double(costTF.text!) != nil {
+                    if UInt(releaseDateTF.text!) != nil {
+                        var name:[String] = (directorNameTF.text?.componentsSeparatedByString(", "))!
+                        if name.count == 2 {
+
+                        let movie = NSEntityDescription.insertNewObjectForEntityForName("Movie", inManagedObjectContext: managedObjectContext) as! Movie
+                        movie.title = titleTF.text!
+                        movie.cost = Double(costTF.text!)
+                        movie.releaseYear = Int(releaseDateTF.text!)
                         
-                        newDirector.lastName = name[0]
-                        newDirector.firstName = name[1]
-                    movie.director = newDirector
-
+                        do {
+                            
+                            let fetchRequest = NSFetchRequest(entityName:"Director")
+                            let directors =
+                                try managedObjectContext.executeFetchRequest(fetchRequest) as! [Director]
+                            
+                            
+                            for director in directors {
+                                
+                                if director.lastName == name[0] && director.firstName == name[1] {
+                                    movie.director = director
+                                }
+                                
+                            }
+                            if movie.director == nil{
+                                
+                                let newDirector = NSEntityDescription.insertNewObjectForEntityForName("Director", inManagedObjectContext: managedObjectContext) as! Director
+                                
+                                newDirector.lastName = name[0]
+                                newDirector.firstName = name[1]
+                                movie.director = newDirector
+                                
+                            }
+                            
+                        }catch {
+                            
+                            print("Error when trying to fetch: \(error)")
+                        }
+                        
+                        do {
+                            try managedObjectContext.save()
+                            
+                        } catch {
+                            print("Error when trying to save movie: \(error)")
+                        }
+                        }
+                        else{
+                            
+                            
+                            displayMessage("Enter first name and last name seperated by comma")
+                        }
+                        
+                    }else{
+                        displayMessage("Enter a valid release date")
+                    }
                 }
-                    
-                
-            
-            }catch {
-                
-                print("Error when trying to fetch: \(error)")
+                else{
+                    displayMessage("Enter a valid cost")
+                }
             }
-            
-            do {
-                try managedObjectContext.save()
-                
-            } catch {
-                print("Error when trying to save movie: \(error)")
+            else{
+                displayMessage("Enter valid title")
             }
-
-            
-            
         }
     }
-   
-
+    
+    // Pass in a String and it will be displayed in an alert view
+    func displayMessage(message:String) {
+        let alert = UIAlertController(title: "", message: message,
+                                      
+                                      preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title:"OK", style: .Default, handler: nil)
+        alert.addAction(defaultAction)
+        self.presentViewController(alert,animated:true, completion:nil)
+    }
 }
