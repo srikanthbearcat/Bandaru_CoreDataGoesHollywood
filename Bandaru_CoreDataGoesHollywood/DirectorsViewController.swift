@@ -26,7 +26,7 @@ class DirectorsViewController: UIViewController, UITableViewDelegate, UITableVie
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    //Loads directors entity before view appears
     override func viewWillAppear(animated: Bool) {
         
         do{
@@ -39,10 +39,12 @@ class DirectorsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         self.directorsTV.reloadData()
     }
+    //Unwind Segue method when done button is clicked in AddDirectorViewController
     @IBAction func doneAddingDirector(segue:UIStoryboardSegue){
         
     }
     
+    //Unwind Segue method when cancel button is clicked in AddDirectorViewController
     @IBAction func cancelAddingDirector(segue:UIStoryboardSegue){
         
     }

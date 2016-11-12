@@ -18,6 +18,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var directorTF: UITextField!
 
     @IBOutlet weak var moviesTableView: UITableView!
+    //Called when segmented control buttons are clicked
     @IBAction func segmentAction(sender: AnyObject) {
         if  sender.titleForSegmentAtIndex(sender.selectedSegmentIndex) == "By Release Date" {
             if let date:Int = Int((releaseDateTF.text)!){
@@ -61,13 +62,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    override func viewWillAppear(animated: Bool) {
-       
-    }
-  
-    
-    
-    
+ 
+//Initialize database
     @IBAction func initializeDB(sender: AnyObject) {
         let hollywoodDreamMaker = HollywoodDreamMaker()
         hollywoodDreamMaker.initializeDB()
@@ -162,14 +158,14 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         return cell
     }
-    
+    //Unwind segue method
     @IBAction func doneAddingMovies(segue:UIStoryboardSegue){
          fetchAllMovies()
     self.moviesTableView.reloadData()
     
 
     }
-    
+    //Unwind segue method
     @IBAction func cancelAddingMovies(segue:UIStoryboardSegue){
         
     }
