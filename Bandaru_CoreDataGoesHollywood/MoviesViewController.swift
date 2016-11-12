@@ -72,6 +72,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let hollywoodDreamMaker = HollywoodDreamMaker()
         hollywoodDreamMaker.initializeDB()
         displayMessage("Database has been initialized")
+        fetchAllMovies()
+        self.moviesTableView.reloadData()
         
     }
     //fetch movies
@@ -96,8 +98,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         do {
             let fetchRequestMovie = NSFetchRequest(entityName:"Movie")
             let fetchRequestDirector = NSFetchRequest(entityName:"Director")
-            fetchRequestDirector.predicate = NSPredicate(format: "lastName == %@", name[0])
-            fetchRequestDirector.predicate = NSPredicate(format: "firstName == %@", name[1])
+            fetchRequestDirector.predicate = NSPredicate(format: "lastName ==[c] %@", name[0])
+            fetchRequestDirector.predicate = NSPredicate(format: "firstName ==[c] %@", name[1])
             let directors =
                 try managedObjectContext.executeFetchRequest(fetchRequestDirector) as! [Director]
             
